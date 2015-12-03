@@ -1,0 +1,80 @@
+<html>
+<head>
+<style type="text/css">
+<!--
+input.error {
+    background-color: red;
+}
+-->
+</style>
+</head>
+<body></body>
+<?php
+// Formular mit Fehlerauswertung
+
+$errorFelder = array();
+$error = null;
+$felder = array("name", "email", "info");
+
+// hier startet die ueberpruefung von den Eingabe im Formular
+if(isset($_POST['ueberpruefung'])) {
+  $error = false;
+
+  foreach($felder as $feld) {
+    if(empty($_POST[$feld])) {
+      $error = true;
+      $errorFelder[$feld] = true;
+    }
+  }
+
+
+}
+
+
+//
+if($error === false) {
+
+  echo "Name --- ".$_POST['name'];
+  echo "<br>";
+  echo "Email --- ".$_POST['email'];
+  echo "<br>";
+  echo "info --- ".$_POST['info'];
+
+} else {
+
+  if($error === true)
+       echo "<b>Es ist ein Fehler aufgetreten</b>";
+  ?>
+
+
+
+   <center>
+ <form  method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>">
+
+ <br>
+  Name:<br>
+  <input name="name" type="text" size="25" value="<?php echo htmlentities($_POST['name']);?>"
+    <?php if(isset($errorFelder['name'])) echo 'class="error"'; ?>> <br>
+
+ <br>
+    Email:<br>
+  <input name="email" type="text" size="25" value="<?php echo htmlentities($_POST['email']);?>"
+   <?php if(isset($errorFelder['email'])) echo 'class="error"'; ?>> <br>
+
+    <br>
+   info:<br>
+  <input name="info" type="textarea" size="25" value="<?php echo htmlentities($_POST['info']);?>"
+   <?php if(isset($errorFelder['info'])) echo 'class="error"'; ?>> <br>
+  <br>
+ <input type="hidden" name="ueberpruefung" value="1">
+  <input type="submit" name="Tutorial" value="Absenden">
+  </form>
+   </center>
+
+  <?php
+
+ }
+  ?>
+
+</body>
+</html>
